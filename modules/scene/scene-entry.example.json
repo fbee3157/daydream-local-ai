@@ -1,0 +1,11 @@
+{
+  "remote_enabled": false,
+  "server_endpoint": "",
+  "scene_cache_dir": "/storage/emulated/0/DayDream/scenes",
+  "character_on_spawn": true,
+  "default_spawn": {
+    "position": [0.0, 0.0, 0.0],
+    "rotation": [0.0, 0.0, 0.0]
+  },
+  "notes": "远端场景入场骨架；真实服务器端点在部署配置中填写。场景素材与角色外观本地私有，不入库；种子 → scene_id 复现由服务器侧保证。"
+}

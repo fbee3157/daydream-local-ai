@@ -23,6 +23,14 @@ device-storage/DayDream/models/*
 device-storage/DayDream/tokenizer/*
 !device-storage/DayDream/tokenizer/.gitkeep
 
+# ===== 远端场景缓存与角色外观素材（本地私有，不入库）=====
+device-storage/DayDream/scenes/*
+!device-storage/DayDream/scenes/.gitkeep
+**/scene-assets/
+*.glb
+*.gltf
+*.fbx
+
 # ===== 构建产物 =====
 build/
 *.so

@@ -31,5 +31,11 @@
     "enabled": false,
     "require_retrieval_rule": "model-or-rule",
     "include_result_context": true
+  },
+  "scene": {
+    "remote_enabled": false,
+    "server_endpoint": "",
+    "scene_cache_dir": "/storage/emulated/0/DayDream/scenes",
+    "character_on_spawn": true
   }
 }
