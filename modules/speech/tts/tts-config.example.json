@@ -1,0 +1,10 @@
+{
+  "tts_model_id": "example-tts",
+  "model_path": "voice/tts/example-tts/model.onnx",
+  "voice_ref": "voices/default",
+  "sample_rate_hz": 22050,
+  "speed": 1.0,
+  "language": "zh-CN",
+  "offline_only": true,
+  "notes": "TTS 模型元数据骨架；权重与音色文件本地私有，不入库。切换模型 / 音色时复制本骨架并修改 model_path、voice_ref。"
+}
