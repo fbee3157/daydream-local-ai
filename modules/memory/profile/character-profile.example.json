@@ -4,6 +4,8 @@
   "address_as": "companion",
   "system_prompt_file": "system-prompt.md",
   "voice_ref": "",
+  "avatar_model_file": "",
+  "avatar_model_format": "",
   "memory_dir": "memory/example-companion",
-  "notes": "人设元数据骨架；外观模型、服装、音色文件本地私有，不入库。替换角色时复制本骨架并修改字段。"
+  "notes": "人设元数据骨架；外观模型、服装、音色文件本地私有，不入库。avatar_model_format 须以逆向确认的原版引擎加载格式为准，替换角色时复制本骨架并修改字段。"
 }

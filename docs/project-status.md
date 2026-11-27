@@ -44,6 +44,11 @@
 - 对话输入 / 发送 / 气泡文本、语音播放与口型事件、网络请求类、原生库存在性核对。
 - 本地推理替换云端调用点；线程派发与句柄生命周期在 Smali 侧落地。
 
+### 2.7 Emma 3D 模型格式确认（依赖逆向审计报告）
+- 确认原版渲染引擎与模型加载类、资源后缀、打包方式（AssetBundle / Pak / 自研 mesh）。
+- 记录骨骼命名层级、BlendShape / 口型节点、材质贴图约定；替换模型按同一格式与节点对齐。
+- 流程文档：`docs/3d-model-format-audit.md`。
+
 ## 3. 配置一致性核对项
 - `runtime-config.json` 的 `local / speech / memory / search / scene` 段与各示例代码读取字段一致；新增配置项时同步更新骨架示例。
 - 外置目录：`models / tokenizer / memory / voice/tts / scenes / characters` 与文档目录约定一致。
