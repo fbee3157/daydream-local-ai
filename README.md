@@ -84,7 +84,7 @@
 ```
 daydream-local-ai/
 ├── README.md                          # 本说明文档
-├── LICENSE                            # 仓库开源许可（自选）
+├── LICENSE                            # MIT 开源许可
 ├── .gitignore                         # 排除 APK、素材、权重、构建产物、本地配置
 ├── docs/
 │   ├── architecture.md                 # 架构细节与模块边界
@@ -109,33 +109,33 @@ daydream-local-ai/
 │       └── runtime-config.json        # 运行配置（模式、路径、上下文、线程、语音、记忆）
 ├── inference/                          # 推理框架说明与接入示例
 │   ├── llama.cpp/                      # llama.cpp 源码引用 / NDK 编译参考（源码外链）
-│   ├── examples/                        # JNI 加载、GGUF 模型扫描示例代码
+│   ├── examples/
+│   │   ├── jni/                        # JNI 桥接 Java + C 骨架、原生库 CMake
+│   │   ├── model-scan/                 # GGUF 目录扫描、过滤、排序示例
+│   │   ├── prompt/                     # 系统设定 / 记忆 / 历史 / 当前输入提示词组装
+│   │   ├── stt/                        # 离线 STT 识别桥接骨架
+│   │   └── tts/                        # 离线 TTS 合成桥接与对话流程串联骨架
 │   ├── models/                         # 权重说明目录（GGUF 文件本身不入库）
 │   └── tokenizer/                      # 分词器文件说明（文件本身不入库）
 ├── modules/                            # 功能模块设计与接入示例
 │   ├── memory/profile/                  # 角色人设配置骨架（profile.json / system-prompt 示例）
-│   ├── memory/history/                  # 短期会话历史落盘骨架 + 历史轮次 Java 骨架
+│   ├── memory/history/                  # 短期会话历史轮次管理骨架
 │   ├── memory/retrieval/                # 可选向量检索配置骨架
-│   ├── speech/stt/                      # 离线 STT 配置骨架 + 识别桥接 Java 骨架（模型外置，不入库）
+│   ├── speech/stt/                      # 离线 STT 配置骨架（识别模型外置，不入库）
 │   ├── speech/tts/                     # 离线 TTS 配置骨架（模型 / 音色外置，不入库权重）
 │   ├── search/router/                   # 可选搜索路由骨架
 │   ├── search/result-context/           # 检索结果摘要注入提示词骨架
-│   ├── scene/                          # 远端场景种子入场客户端骨架与配置示例
-│   ├── speech/
-│   │   ├── stt/                        # 离线语音识别模块
-│   │   └── tts/                        # 离线语音合成模块
-│   ├── memory/
-│   │   ├── history/                    # 短期会话历史
-│   │   ├── profile/                    # 用户偏好、角色设定长期记忆
-│   │   └── retrieval/                  # 可选：向量检索回忆历史片段
-│   └── search/
-│       ├── router/                     # 判断是否需要检索（离线优先）
-│       └── result-context/             # 检索结果摘要拼入提示词
+│   └── scene/                          # 远端场景种子入场客户端骨架与配置示例
 ├── device-storage/                     # 部署到头显后的本地存储结构（说明，不入库权重）
 │   └── DayDream/
 │       ├── models/                     # GGUF 外置权重（自由导入）
 │       ├── tokenizer/                  # 分词器
 │       ├── memory/                     # 对话历史、角色设定、记忆索引
+│       ├── characters/                 # 角色人设、外观模型、音色（本地私有素材）
+│       ├── voice/
+│       │   ├── stt/                   # 离线 STT 模型外置目录
+│       │   └── tts/                   # 离线 TTS 模型与音色外置目录
+│       ├── scenes/                     # 远端场景资源本地缓存
 │       └── config.json
 ├── scripts/                            # 构建与部署脚本（Mac / ADB）
 │   ├── adb-extract.sh                  # 提取 APK / 分包
@@ -170,30 +170,39 @@ adb pull <base.apk 路径> ./base.apk
 ```
 
 ### 阶段 2：反编译与代码定位
-1. Apktool 解包：
+1. Apktool 解包（也可直接运行审计脚本完成连接检查、拉取与解包）：
 ```bash
 apktool d base.apk -o daydream_decoded
+./scripts/reverse-audit.sh <包名>
+./scripts/static-audit-decoded.sh daydream_decoded
 ```
 2. JADX 打开原版 APK，定位：
    - 对话输入框与消息发送逻辑；
    - Emma 对话气泡、台词文本来源；
    - 语音录制、播放、口型动画触发点；
    - 网络请求层（云端对话接口、API 域名）；
-   - `lib/` 下是否存在原生推理库，判断原版为云端还是本地推理。
+   - `lib/` 下是否存在原生推理库，判断原版为云端还是本地推理；
+   - 3D 模型加载类、资源后缀、打包方式与骨骼 / 表情节点（见 `docs/3d-model-format-audit.md`）。
 
 ### 阶段 3：llama.cpp 推理模块集成
 - APK 内：NDK 编译 llama.cpp 产物放入 `lib/arm64-v8a/`；JNI 加载代码调用原生库。
 - 外置：GGUF 权重、分词器、记忆文件放在头显本地存储，不打进 APK。
 - 启动流程：检查存储权限 → 校验模型文件 → 加载权重与分词器 → 接收输入 → 推理生成 → 输出到对话 UI。
 - **权重自由导入**：应用扫描外置模型目录，读取 GGUF 文件与配套分词器；更换模型只需替换目录内权重文件，无需改动 APK 代码。
+- 代码骨架：`inference/examples/jni/`、`model-scan/`、`prompt/`。
 
 ### 阶段 4：离线语音与记忆模块
-- **离线 STT**：端侧语音识别库把麦克风语音转为文字，送入对话输入。
-- **离线 TTS**：回复文本端侧合成语音，并接入口型动画触发点；复用原版已有动画事件。
-- **记忆**：短期会话历史 + 长期偏好 / 角色设定本地落盘；进阶使用向量检索回忆历史片段。
+- **离线 STT**：麦克风采集 → 离线识别为文字，送入对话输入；骨架见 `inference/examples/stt/`。
+- **离线 TTS**：回复文本端侧合成语音，并接入口型动画触发点；骨架见 `inference/examples/tts/`。
+- **记忆**：短期会话历史轮次管理 + 长期偏好 / 角色设定本地落盘；进阶使用向量检索回忆历史片段。
 - **联网搜索（可选）**：判断检索需求 → 取资料摘要 → 拼入提示词上下文；离线环境下该模块可停用。
 
-### 阶段 5：重打包、对齐、签名、回装
+### 阶段 5：角色、场景与 3D 模型对接
+- **角色替换**：人设文本外置到 `characters/<id>/system-prompt.md`；外观模型格式、骨骼与表情节点以逆向确认的原版加载规范为准。
+- **远端场景**：种子请求清单 → 资源缓存到 `scenes/` → 本地角色放到出生点；场景服务可选、默认关闭。
+- **格式前提**：未确认原版引擎支持的模型格式前，不预设交付 glb；替换模型必须匹配原版格式与节点命名。
+
+### 阶段 6：重打包、对齐、签名、回装
 1. 回编译：
 ```bash
 apktool b daydream_decoded -o daydream_modified.apk
@@ -262,6 +271,7 @@ adb install -r daydream_aligned.apk
 3. **云端后端不确定性**：原版服务器若下线，云端链路不可用；本机离线推理不依赖该链路。
 4. **版权素材**：角色与场景素材不得提取、再分发或二次修改发布。
 5. **模型许可**：遵循 Gemma、Qwen 各自使用条款；生成内容合规。
+6. **3D 模型格式**：替换模型须匹配原版引擎加载格式、骨骼层级与表情节点；格式不匹配会导致模型不显示或动画挂不上。
 
 ## 九、术语对照
 
@@ -272,3 +282,5 @@ adb install -r daydream_aligned.apk
 - **TTS**：Text-to-Speech，语音合成（本项目离线运行）。
 - **KV 缓存**：推理过程中缓存注意力键值，占用常驻内存；上下文越长占用越高。
 - **split APK**：应用分包，包含基础包与按架构 / 语言拆分的配置包。
+- **glTF / glb**：跨引擎通用 3D 模型格式；`.glb` 为二进制单文件，最终格式以原版引擎加载器为准。
+- **VRM**：基于 glTF 的虚拟人角色格式，含骨骼、表情与视线；需运行时有对应解析支持。
