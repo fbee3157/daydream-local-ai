@@ -56,6 +56,13 @@ apktool d base.apk -o daydream_decoded
 ```
 脚本产出 `~/QuestApk/audit-report.txt`：原生 `.so` 清单、Smali 目录、网络/对话/语音/场景关键词命中、素材目录命中，以及待 JADX 人工核对项。APK 与解包产物为本地私有，不入库、不分发。
 
+### 6.1 离线解包审计（无需头显连接）
+解包完成后，可在任意机器上对解包目录跑静态审计，不依赖 ADB：
+```bash
+./scripts/static-audit-decoded.sh <解包目录> [报告输出路径]
+```
+报告覆盖 Manifest 权限与导出组件、原生库 ABI 与 `.so`、素材目录清单、关键词命中文件，以及待 JADX 核对项。
+
 ## 7. 注意事项
 - 原素材资源（模型、服装、场景）只复用不改动；不提取对外分发。
 - Smali 修改需对应 JADX 中的类与方法；回编译前核对资源与清单一致性。

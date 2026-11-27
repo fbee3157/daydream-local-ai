@@ -141,6 +141,7 @@ daydream-local-ai/
 │   ├── ndk-build-inference.sh          # NDK 编译 llama.cpp 推理库
 │   ├── repackage-sign.sh                # 回编译、对齐、签名
 │   ├── reverse-audit.sh                # 连接检查、拉取、解包与逆向审计清单扫描
+│   ├── static-audit-decoded.sh         # 解包目录离线静态审计（权限、ABI、素材、关键词命中）
 │   └── adb-install.sh                  # 回装到头显
 └── reference/
     ├── tool-notes.md                   # 工具链备注与参数
