@@ -90,6 +90,7 @@ daydream-local-ai/
 │   ├── architecture.md                 # 架构细节与模块边界
 │   ├── reverse-workflow.md             # 逆向提取、解包、定位流程
 │   ├── integration.md                  # 推理 / 离线语音 / 记忆 / 搜索接入说明
+│   ├── native-integration.md           # NDK CMake 参数、JNI 骨架、GGUF 扫描、提示词组装、Smali 对接点
 │   ├── packaging.md                    # 回编译、对齐、签名、回装命令
 │   ├── github-publish.md                # GitHub 仓库初始化、提交、发布步骤
 │   └── risk-and-legal.md                # 风险、版权与合规清单
