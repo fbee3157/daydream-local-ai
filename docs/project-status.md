@@ -24,12 +24,12 @@
 - 原生库 CMake 与 llama.cpp 静态库链接关系待按真实 NDK 构建结果补齐。
 - 真机内存实测：权重 + KV 缓存 + STT/TTS + 应用纹理的驻留占用与峰值。
 
-### 2.2 STT 离线语音（当前只有 TTS 骨架）
-- 麦克风采集 → 离线识别为文字的引擎选择、模型目录、句柄生命周期与 Java/JNI 骨架。
-- 识别结果送入 `PromptComposer` 的输入链路；与 TTS 共享内存预算。
+### 2.2 STT 离线语音
+- 识别桥接 Java 骨架：`inference/examples/stt/OfflineSttBridge.java`（模型扫描、句柄初始化 / 识别 / 释放）。
+- 待接入：采集端 AudioRecord 缓冲对接、STT 引擎 C API、识别结果送入 `PromptComposer` 输入链路；与 TTS 共享内存预算。
 
 ### 2.3 记忆模块
-- **短期历史**：会话轮次落盘、上下文裁剪、会话结束归档。
+- **短期历史**：轮次管理骨架 `modules/memory/history/ConversationHistory.java`；待补落盘、上下文裁剪、会话结束归档。
 - **长期记忆**：偏好 / 角色设定本地读写；按角色隔离目录。
 - **向量检索（可选）**：历史片段索引、召回、注入提示词；未启用时按顺序拼接历史。
 
