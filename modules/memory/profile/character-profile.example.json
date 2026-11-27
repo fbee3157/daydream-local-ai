@@ -1,0 +1,9 @@
+{
+  "character_id": "example-companion",
+  "display_name": "Example Companion",
+  "address_as": "companion",
+  "system_prompt_file": "system-prompt.md",
+  "voice_ref": "",
+  "memory_dir": "memory/example-companion",
+  "notes": "人设元数据骨架；外观模型、服装、音色文件本地私有，不入库。替换角色时复制本骨架并修改字段。"
+}

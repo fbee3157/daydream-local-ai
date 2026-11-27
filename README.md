@@ -91,6 +91,7 @@ daydream-local-ai/
 │   ├── reverse-workflow.md             # 逆向提取、解包、定位流程
 │   ├── integration.md                  # 推理 / 离线语音 / 记忆 / 搜索接入说明
 │   ├── native-integration.md           # NDK CMake 参数、JNI 骨架、GGUF 扫描、提示词组装、Smali 对接点
+│   ├── character-and-model-swap.md    # 角色（Emma）替换与 GGUF 大模型自由切换说明
 │   ├── packaging.md                    # 回编译、对齐、签名、回装命令
 │   ├── github-publish.md                # GitHub 仓库初始化、提交、发布步骤
 │   └── risk-and-legal.md                # 风险、版权与合规清单
@@ -107,6 +108,7 @@ daydream-local-ai/
 │   ├── models/                         # 权重说明目录（GGUF 文件本身不入库）
 │   └── tokenizer/                      # 分词器文件说明（文件本身不入库）
 ├── modules/                            # 功能模块设计与接入示例
+│   ├── memory/profile/                  # 角色人设配置骨架（profile.json / system-prompt 示例）
 │   ├── speech/
 │   │   ├── stt/                        # 离线语音识别模块
 │   │   └── tts/                        # 离线语音合成模块
