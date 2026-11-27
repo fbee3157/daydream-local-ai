@@ -1,0 +1,5 @@
+{
+  "max_context_items": 3,
+  "include_source_excerpt": true,
+  "notes": "检索结果摘要拼入提示词的骨架配置；仅作为上下文参考，模型基于资料生成回复，避免无依据编造。"
+}

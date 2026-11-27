@@ -1,0 +1,6 @@
+{
+  "enabled": false,
+  "offline_only": true,
+  "rule": "model-or-rule",
+  "notes": "可选联网搜索路由骨架；离线主链路不发起网络请求。检索需求判断、结果摘要注入提示词由搜索模块实现。"
+}

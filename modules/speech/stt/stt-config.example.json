@@ -1,0 +1,8 @@
+{
+  "provider": "on-device",
+  "model_dir": "/storage/emulated/0/DayDream/voice/stt",
+  "sample_rate_hz": 16000,
+  "language": "zh-CN",
+  "offline_only": true,
+  "notes": "离线 STT 骨架配置；识别引擎、模型句柄生命周期与 Java/JNI 待接入。STT 模型二进制本地私有，不入库。"
+}

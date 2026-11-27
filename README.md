@@ -90,6 +90,7 @@ daydream-local-ai/
 │   ├── architecture.md                 # 架构细节与模块边界
 │   ├── reverse-workflow.md             # 逆向提取、解包、定位流程
 │   ├── integration.md                  # 推理 / 离线语音 / 记忆 / 搜索接入说明
+│   ├── project-status.md               # 已完成模块、未完成骨架、待真机验证项与执行顺序
 │   ├── native-integration.md           # NDK CMake 参数、JNI 骨架、GGUF 扫描、提示词组装、Smali 对接点
 │   ├── character-and-model-swap.md    # 角色（Emma）替换与 GGUF 大模型自由切换说明
 │   ├── tts-offline-guide.md           # 离线 TTS 外挂模型、音色自由切换与对话语音链路
@@ -111,7 +112,12 @@ daydream-local-ai/
 │   └── tokenizer/                      # 分词器文件说明（文件本身不入库）
 ├── modules/                            # 功能模块设计与接入示例
 │   ├── memory/profile/                  # 角色人设配置骨架（profile.json / system-prompt 示例）
+│   ├── memory/history/                  # 短期会话历史落盘骨架
+│   ├── memory/retrieval/                # 可选向量检索配置骨架
+│   ├── speech/stt/                      # 离线 STT 配置骨架（识别模型外置，不入库）
 │   ├── speech/tts/                     # 离线 TTS 配置骨架（模型 / 音色外置，不入库权重）
+│   ├── search/router/                   # 可选搜索路由骨架
+│   ├── search/result-context/           # 检索结果摘要注入提示词骨架
 │   ├── scene/                          # 远端场景种子入场客户端骨架与配置示例
 │   ├── speech/
 │   │   ├── stt/                        # 离线语音识别模块

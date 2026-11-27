@@ -1,0 +1,7 @@
+{
+  "enabled": false,
+  "index_dir": "/storage/emulated/0/DayDream/memory/retrieval",
+  "top_k": 4,
+  "embed_provider": "on-device",
+  "notes": "可选向量检索骨架；未启用时 PromptComposer 按顺序拼接会话历史。索引与嵌入模型本地私有，不入库。"
+}

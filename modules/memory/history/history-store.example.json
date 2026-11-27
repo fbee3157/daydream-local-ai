@@ -1,0 +1,7 @@
+{
+  "storage_dir": "/storage/emulated/0/DayDream/memory/history",
+  "session_file": "session-<timestamp>.jsonl",
+  "max_history_turns": 20,
+  "archive_on_session_end": true,
+  "notes": "短期会话历史骨架；每条记录一条 User / Assistant 轮次。真实落盘格式与裁剪策略由记忆模块实现，历史文本不入库。"
+}

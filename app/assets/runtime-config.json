@@ -18,6 +18,7 @@
   },
   "speech": {
     "stt_provider": "on-device",
+    "stt_model_dir": "/storage/emulated/0/DayDream/voice/stt",
     "tts_provider": "on-device",
     "offline_only": true,
     "lip_sync_enabled": true
