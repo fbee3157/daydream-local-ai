@@ -1,0 +1,47 @@
+# ===== 原版应用私有文件（版权素材，禁止入库）=====
+*.apk
+*.apks
+base.apk
+split_config.*.apk
+app/base/
+app/splits/
+**/assets/raw/
+**/res/raw/
+**/models/avatar/
+**/characters/
+
+# ===== 模型权重与离线语音模型二进制（不入库，本地私有）=====
+*.gguf
+*.bin
+*.onnx
+*.pt
+*.safetensors
+inference/models/*
+!inference/models/.gitkeep
+device-storage/DayDream/models/*
+!device-storage/DayDream/models/.gitkeep
+device-storage/DayDream/tokenizer/*
+!device-storage/DayDream/tokenizer/.gitkeep
+
+# ===== 构建产物 =====
+build/
+*.so
+*.o
+*.dex
+classes*.dex
+dist/
+out/
+
+# ===== 签名密钥与本地私密配置 =====
+*.keystore
+*.jks
+key.properties
+local.properties
+config.local.json
+
+# ===== 系统 / 编辑器临时文件 =====
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.log

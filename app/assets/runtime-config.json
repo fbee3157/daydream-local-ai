@@ -1,0 +1,35 @@
+{
+  "inference_mode": "local",
+  "local": {
+    "engine": "llama.cpp",
+    "model_dir": "/storage/emulated/0/DayDream/models",
+    "model_file": "",
+    "tokenizer_path": "/storage/emulated/0/DayDream/tokenizer",
+    "context_length": 2048,
+    "threads": 4,
+    "max_memory_mb": 3072,
+    "model_format": "GGUF"
+  },
+  "cloud": {
+    "enabled": false,
+    "api_endpoint": "",
+    "api_key": "",
+    "fallback_when_local_missing": false
+  },
+  "speech": {
+    "stt_provider": "on-device",
+    "tts_provider": "on-device",
+    "offline_only": true,
+    "lip_sync_enabled": true
+  },
+  "memory": {
+    "storage_dir": "/storage/emulated/0/DayDream/memory",
+    "enable_long_term": true,
+    "enable_vector_retrieval": false
+  },
+  "search": {
+    "enabled": false,
+    "require_retrieval_rule": "model-or-rule",
+    "include_result_context": true
+  }
+}
