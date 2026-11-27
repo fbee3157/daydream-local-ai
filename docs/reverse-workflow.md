@@ -47,6 +47,15 @@ apktool d base.apk -o daydream_decoded
 - **本地**：`lib/` 内含推理原生库；对话逻辑直接调用本地推理。
 - 原版后端是否仍在线：真机试聊或检查解包后的网络配置。
 
-## 6. 注意事项
+## 6. 一键审计脚本
+`scripts/reverse-audit.sh` 串联连接检查、包名定位、APK/分包拉取、apktool 解包与只读扫描，输出审计清单：
+```bash
+# 不传包名：先列出候选包名再交互输入；也可直接传入完整包名
+./scripts/reverse-audit.sh
+./scripts/reverse-audit.sh <包名>
+```
+脚本产出 `~/QuestApk/audit-report.txt`：原生 `.so` 清单、Smali 目录、网络/对话/语音/场景关键词命中、素材目录命中，以及待 JADX 人工核对项。APK 与解包产物为本地私有，不入库、不分发。
+
+## 7. 注意事项
 - 原素材资源（模型、服装、场景）只复用不改动；不提取对外分发。
 - Smali 修改需对应 JADX 中的类与方法；回编译前核对资源与清单一致性。
